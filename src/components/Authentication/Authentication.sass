@@ -1,0 +1,59 @@
+%flex-column
+    display: flex
+    flex-flow: column nowrap
+
+%border
+    border: .1em solid #b8b8b8
+    border-radius: .3em
+
+%focus
+    outline: .2em solid #4d90fe
+    outline-offset: -.15em
+
+.AuthForm
+    @extend %flex-column
+    justify-content: center
+    align-items: center
+    
+    &_Logo
+        max-width: 10em
+        max-height: 6em
+        align-self: flex-start
+        filter: invert(100%)
+
+    &_Button
+        @extend %border
+        appearance: none
+        height: 2.5em
+        width: 100%
+        margin: .75em 0
+        padding: 0 1.25em
+        background-color: #2d65be
+        opacity: 85%
+        color: #fff
+        transition: opacity 200ms
+    
+    &_Button:focus
+        @extend %focus
+    
+    &_Button:hover
+        cursor: pointer
+        opacity: 100%
+
+.InputLabel
+    @extend %flex-column
+    padding: .5em 0
+
+    &_Text
+        padding-top: 0
+        padding-bottom: .5em
+        font-weight: 500
+
+    &_Input
+        @extend %border
+        padding: .25em .5em
+        min-height: 2em
+
+    &_Input:focus
+        @extend %focus
+        
