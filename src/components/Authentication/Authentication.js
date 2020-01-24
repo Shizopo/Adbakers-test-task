@@ -2,12 +2,13 @@ import React from "react";
 import logo from "./logo.png";
 import "./Authentication.sass";
 
-const Authentication = () => {
+const Authentication = ({ handleInput, handleSubmit }) => {
   return (
     <>
       <form
         className="AuthForm"
-        onSubmit={() => console.log("submit button clicked (form)")}
+        onSubmit={e => handleSubmit(e)}
+        method="post"
         noValidate
       >
         <img src={logo} className="AuthForm_Logo" alt="LOGO" />
@@ -15,28 +16,20 @@ const Authentication = () => {
           <span className="InputLabel_Text">Login</span>
           <input
             type="text"
-            name="LoginInput"
-            // minLength="16"
-            // maxLength="16"
+            name="loginInput"
             placeholder="Login"
-            // value={this.state.value}
-            // className={valid.cardNum === true ? "" : "invalidInput"}
             className="InputLabel_Input"
-            onChange={e => console.log(e.currentTarget.value)}
+            onChange={e => handleInput(e)}
           />
         </label>
         <label className="InputLabel" title="Enter your password">
           <span className="InputLabel_Text">Password</span>
           <input
             type="password"
-            name="PasswordInput"
-            // minLength="16"
-            // maxLength="16"
+            name="passwordInput"
             placeholder="Password"
-            // value={this.state.value}
-            // className={valid.cardNum === true ? "" : "invalidInput"}
             className="InputLabel_Input"
-            onChange={e => console.log(e.currentTarget.value)}
+            onChange={e => handleInput(e)}
           />
         </label>
         <button type="submit" className="AuthForm_Button">
