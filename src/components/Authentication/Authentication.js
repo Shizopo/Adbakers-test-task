@@ -2,7 +2,7 @@ import React from "react";
 import logo from "./logo.png";
 import "./Authentication.sass";
 
-const Authentication = ({ handleInput, handleSubmit }) => {
+const Authentication = ({ handleInput, handleSubmit, error }) => {
   return (
     <>
       <form
@@ -32,6 +32,13 @@ const Authentication = ({ handleInput, handleSubmit }) => {
             onChange={e => handleInput(e)}
           />
         </label>
+
+        {error.length > 0 ? (
+          <div className="AuthForm_Error">
+            <p className="AuthForm_Error_Text">{error}</p>
+          </div>
+        ) : null}
+
         <button type="submit" className="AuthForm_Button">
           Submit
         </button>

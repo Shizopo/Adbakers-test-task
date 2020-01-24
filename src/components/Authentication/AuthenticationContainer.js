@@ -5,25 +5,37 @@ class AuthenticationContainer extends React.Component {
   state = {
     loginInput: "",
     passwordInput: "",
-    isLoaded: false,
     token: "",
     error: "",
   };
 
+  validatePassword = value => {
+    if (value.length < 8) {
+      this.setState({
+        error: "Password is less than 8 chars",
+      });
+      return;
+    }
+    return true;
+  };
+
   handleInput = e => {
     let { name, value } = e.currentTarget;
-    this.setState(
-      {
-        [name]: value,
-      },
-      () => console.log("done", this.state)
-    );
+    this.setState({
+      error: "",
+      [name]: value,
+    });
   };
 
   handleSubmit = async e => {
     e.preventDefault();
 
     const { loginInput, passwordInput } = this.state;
+
+    if (!this.validatePassword(passwordInput)) {
+      return;
+    }
+
     const requestBody = { email: loginInput, password: passwordInput };
 
     let response = await fetch("https://reqres.in/api/login", {
@@ -55,6 +67,7 @@ class AuthenticationContainer extends React.Component {
         <Authentication
           handleInput={this.handleInput}
           handleSubmit={this.handleSubmit}
+          error={this.state.error}
         />
       </>
     );
