@@ -1,2 +1,26 @@
+%border
+    border: .1em solid #b8b8b8
+    border-radius: .3em
+
+%focus
+    outline: .2em solid #4d90fe
+    outline-offset: -.15em
+    
+.Users
+    display: flex
+    flex-flow: column nowrap
+    justify-content: center
+    align-items: center
+
 .UsersList
+    margin: 0
+    padding: 0
     list-style: none
+
+    &_User
+        @extend %border
+        padding: .25em
+        cursor: pointer
+        user-select: none
+        
+        
