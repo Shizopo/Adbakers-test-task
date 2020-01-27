@@ -1,15 +1,21 @@
-%border
-    border: .1em solid #b8b8b8
-    border-radius: .3em
+$card-background-color: #fff
+$focus-card-background-color: #fafafa
+$box-shadow: 0 0 10px 5px #f1f1f1
+$border-radius: .3em
+
+%flex-column
+    display: flex
+    flex-flow: column nowrap    
 
 %focus
     outline: .2em solid #4d90fe
     outline-offset: -.15em
     
 .Users
-    display: flex
-    flex-flow: column nowrap
-    justify-content: center
+    @extend %flex-column
+    min-width: 15em
+    max-width: 30em
+    justify-content: flex-start
     align-items: center
 
 .UsersList
@@ -18,9 +24,96 @@
     list-style: none
 
     &_User
-        @extend %border
-        padding: .25em
+        margin: 1em
+        padding: 1em
+        min-width: 8em
+        max-width: 15em
+        background-color: $card-background-color
         cursor: pointer
         user-select: none
+        border-radius: $border-radius
+        box-shadow: $box-shadow
+        transition: box-shadow 200ms
         
+        &:focus, &:hover
+            background-color: $focus-card-background-color
+            box-shadow: 0 0 .75em .3em #dbdbdb
+
+.UserCard
+    position: absolute
+    top: 33vh
+    width: 25em
+    height: 12.5em
+    display: none
+    flex-flow: row nowrap
+    justify-content: flex-start
+    align-items: center
+    font-weight: 600
+    background-color: $card-background-color
+    border-radius: $border-radius
+    box-shadow: 0 0 10em 5em #f1f1f1
+
+    &_active
+        @extend .UserCard
+        display: flex
+
+    &_Close
+        appearance: none
+        position: absolute;
+        right: 0;
+        top: 0
+        display: inline-block
+        padding: .5em 1em
+        border: none
+        overflow: hidden
+        text-decoration: none
+        color: inherit
+        background-color: transparent
+        text-align: center
+        cursor: pointer
+        white-space: nowrap
+
+    &_Avatar
+        padding: 2em 1em
+        border-radius: 50%
+    
+    &_Details
+        @extend %flex-column
+
+        &_UserInfo
+            font-weight: 400
+            justify-self: flex-end
+
+.UsersNavigation
+    display: flex
+    flex-flow: row nowrap
+    justify-content: center
+    width: 100%
+
+    &_Button
+        appearance: none
+        height: 2.5em
+        width: 7.5em
+        margin: .75em 2em
+        padding: 0 1.25em
+        cursor: pointer
+        background-color: #2d65be
+        opacity: 85%
+        color: #fff
+        border: .1em solid #b8b8b8
+        border-radius: $border-radius
+        transition: opacity 200ms
+    
+        &:focus, &:hover
+            opacity: 100%
         
+        &_disabled
+            @extend .UsersNavigation_Button
+            display: none
+
+@media (max-width: 480px) 
+  .UserCard
+    top: 23vh
+    width: 15em
+    height: 20em
+    flex-flow: column nowrap
