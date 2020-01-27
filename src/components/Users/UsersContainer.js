@@ -1,11 +1,16 @@
 import React from "react";
 import Users from "./Users";
+import UsersCard from "./UserCard";
 
 class UsersContainer extends React.Component {
   state = {
+    isLoading: true,
     users: [],
     numberOfPages: 0,
     currentPage: 0,
+    isModalShown: false,
+    selectedUser: {},
+    selectedId: 0,
   };
 
   componentDidMount() {
@@ -22,6 +27,7 @@ class UsersContainer extends React.Component {
           users: [...this.state.users, data],
           numberOfPages: total_pages,
           currentPage: page,
+          isLoading: false,
         }));
       })
       .catch(err => console.log("An error occured", err));
@@ -52,16 +58,49 @@ class UsersContainer extends React.Component {
     }
   };
 
+  handleClick = (id, arr) => {
+    const selectedUser = arr.find(el => {
+      if (el.id === +id) {
+        return el;
+      }
+      return null;
+    });
+    this.setState({ isModalShown: true, selectedUser });
+  };
+
+  closeModal = () => {
+    this.setState({ isModalShown: false });
+  };
+
   render() {
-    const { users, currentPage, numberOfPages } = this.state;
-    return (
-      <>
-        <Users
-          users={users[currentPage - 1]}
-          handlePageChange={this.handlePageChange}
-        />
-      </>
-    );
+    const {
+      isLoading,
+      users,
+      currentPage,
+      numberOfPages,
+      isModalShown,
+      selectedUser,
+    } = this.state;
+    if (isLoading) {
+      return <h1>loading</h1>;
+    } else {
+      return (
+        <>
+          <Users
+            users={users[currentPage - 1]}
+            currentPage={currentPage}
+            numberOfPages={numberOfPages}
+            handlePageChange={this.handlePageChange}
+            handleClick={this.handleClick}
+          />
+          <UsersCard
+            isShown={isModalShown}
+            user={selectedUser}
+            closeModal={this.closeModal}
+          />
+        </>
+      );
+    }
   }
 }
 
